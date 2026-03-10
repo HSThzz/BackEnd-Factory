@@ -7,7 +7,7 @@ export const ORMS = {
   PRISMA: 'prisma',
 } as const;
 
-export type ORM = typeof ORMS[keyof typeof ORMS];
+export type ORM = (typeof ORMS)[keyof typeof ORMS];
 
 export const ORM_NAMES = {
   [ORMS.TYPEORM]: 'TypeORM',
@@ -15,6 +15,7 @@ export const ORM_NAMES = {
 } as const;
 
 export const ORM_DESCRIPTIONS = {
-  [ORMS.TYPEORM]: 'TypeORM is an ORM that can run in Node.js and supports many databases',
+  [ORMS.TYPEORM]:
+    'TypeORM is an ORM that can run in Node.js and supports many databases',
   [ORMS.PRISMA]: 'Next-generation Node.js and TypeScript ORM',
 } as const;

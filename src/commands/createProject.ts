@@ -11,7 +11,7 @@ import { logger } from '../utils/logger';
 export async function createProject(): Promise<void> {
   try {
     logger.info('Welcome to create-backend-api!');
-    logger.info('Let\'s create your new backend project.\n');
+    logger.info("Let's create your new backend project.\n");
 
     const projectConfig = await projectPrompt();
     logger.info('');

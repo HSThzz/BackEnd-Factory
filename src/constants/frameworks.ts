@@ -7,7 +7,7 @@ export const FRAMEWORKS = {
   FASTIFY: 'fastify',
 } as const;
 
-export type Framework = typeof FRAMEWORKS[keyof typeof FRAMEWORKS];
+export type Framework = (typeof FRAMEWORKS)[keyof typeof FRAMEWORKS];
 
 export const FRAMEWORK_NAMES = {
   [FRAMEWORKS.EXPRESS]: 'Express',

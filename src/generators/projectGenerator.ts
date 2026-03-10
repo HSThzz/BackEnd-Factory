@@ -65,7 +65,10 @@ async function processTemplateDirectory(
       continue;
     }
 
-    if (!includeDocker && (item.startsWith('docker') || item === '.dockerignore')) {
+    if (
+      !includeDocker &&
+      (item.startsWith('docker') || item === '.dockerignore')
+    ) {
       continue;
     }
 
@@ -105,13 +108,19 @@ export async function projectGenerator(
   const spinner = ora('Generating project...').start();
 
   try {
-    const { targetDir, stack, name, description, version, includeDocker } = options;
+    const { targetDir, stack, name, description, version, includeDocker } =
+      options;
 
     let templatePath = getTemplatePath(stack);
 
     if (!(await exists(templatePath))) {
       const templateName = `${stack.framework}-${stack.orm}-${stack.database}`;
-      const altPath = path.resolve(process.cwd(), 'src', 'templates', templateName);
+      const altPath = path.resolve(
+        process.cwd(),
+        'src',
+        'templates',
+        templateName
+      );
       if (await exists(altPath)) {
         templatePath = altPath;
       } else {

@@ -1,5 +1,9 @@
 import inquirer from 'inquirer';
-import { FRAMEWORKS, FRAMEWORK_NAMES, Framework } from '../constants/frameworks';
+import {
+  FRAMEWORKS,
+  FRAMEWORK_NAMES,
+  Framework,
+} from '../constants/frameworks';
 import { ORMS, ORM_NAMES, ORM } from '../constants/orms';
 import { DATABASES, DATABASE_NAMES, Database } from '../constants/databases';
 import { StackSelection } from '../types';

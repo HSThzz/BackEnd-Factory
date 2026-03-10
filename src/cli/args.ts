@@ -11,7 +11,9 @@ export function setupCommands(): Command {
 
   program
     .name('create-backend-api')
-    .description('A CLI tool to generate Node.js backend projects with TypeScript')
+    .description(
+      'A CLI tool to generate Node.js backend projects with TypeScript'
+    )
     .version('0.1.0');
 
   program
@@ -25,7 +27,9 @@ export function setupCommands(): Command {
   program
     .command('generate')
     .alias('g')
-    .description('Generate a resource (model, controller, route) in an existing project')
+    .description(
+      'Generate a resource (model, controller, route) in an existing project'
+    )
     .action(async () => {
       await generateResource();
     });
