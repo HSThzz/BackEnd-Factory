@@ -5,6 +5,20 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 2024-12-19
+
+### Added
+
+- Template validation and filtering in stack selection prompts
+- Shows available templates before selection
+- Only displays valid combinations (framework + ORM + database)
+- Added `templateUtils` module for template management
+
+### Fixed
+
+- Fixed build script compatibility on Windows (replaced `rm -rf` with `rimraf`)
+- Cross-platform support for `clean` and `prebuild` scripts in generated projects
+
 ## [0.1.1] - 2024-12-19
 
 ### Fixed
