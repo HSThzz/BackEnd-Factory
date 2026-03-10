@@ -54,6 +54,14 @@ GitHub Actions workflow definitions for CI/CD.
 - `npm run lint` - Run ESLint
 - `npm run test` - Run tests
 
+## Implementation Guides
+
+This project is currently in the initial setup phase. To start implementing, check out these guides:
+
+- **[Quick Start Guide](./docs/QUICK_START.md)** - Get started quickly with the first steps
+- **[Implementation Guide](./docs/IMPLEMENTATION_GUIDE.md)** - Complete step-by-step implementation plan
+- **[Template Examples](./docs/TEMPLATE_EXAMPLE.md)** - Examples of how to structure templates
+
 ## License
 
 MIT
