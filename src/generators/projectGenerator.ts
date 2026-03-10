@@ -1,5 +1,6 @@
 import ora from 'ora';
 import path from 'path';
+import fs from 'fs';
 import { joinPath } from '../utils/pathUtils';
 import {
   ensureDir,
@@ -16,30 +17,56 @@ import { logger } from '../utils/logger';
 import { ProjectGenerationOptions } from '../types';
 
 /**
- * Gets the template directory path based on the selected stack
+ * Gets the package root directory
+ * @returns {string} Package root directory path
+ */
+function getPackageRoot(): string {
+  // Try to find package.json by walking up from __dirname
+  let currentDir = __dirname;
+
+  // When installed via npm: __dirname is dist/generators/
+  // Package root is at: dist/../ (create-backend-api/)
+  // When running from source: same structure
+
+  // Walk up to find package.json
+  for (let i = 0; i < 5; i++) {
+    const packageJsonPath = path.join(currentDir, 'package.json');
+    if (fs.existsSync(packageJsonPath)) {
+      return currentDir;
+    }
+    currentDir = path.resolve(currentDir, '..');
+  }
+
+  // Fallback: assume package root is 2 levels up from dist/generators/
+  return path.resolve(__dirname, '..', '..');
+}
+
+/**
+ * Gets all possible template directory paths based on the selected stack
  * @param {Object} stack - Stack configuration
  * @param {string} stack.framework - Framework name
  * @param {string} stack.orm - ORM name
  * @param {string} stack.database - Database name
- * @returns {string} Template directory path
+ * @returns {string[]} Array of possible template directory paths
  */
-function getTemplatePath(stack: {
+function getTemplatePaths(stack: {
   framework: string;
   orm: string;
   database: string;
-}): string {
+}): string[] {
   const templateName = `${stack.framework}-${stack.orm}-${stack.database}`;
+  const packageRoot = getPackageRoot();
 
-  const possiblePaths = [
-    // Production: templates in src/templates (npm package)
+  return [
+    // Primary: from package root -> src/templates/
+    path.resolve(packageRoot, 'src', 'templates', templateName),
+    // Fallback 1: relative from __dirname (dist/generators/)
     path.resolve(__dirname, '..', '..', 'src', 'templates', templateName),
-    // Development: templates in src/templates (source)
-    path.resolve(__dirname, '..', 'templates', templateName),
-    // Alternative: from project root
+    // Fallback 2: from process.cwd() (when running from source)
     path.resolve(process.cwd(), 'src', 'templates', templateName),
+    // Fallback 3: try one more level up
+    path.resolve(__dirname, '..', '..', '..', 'src', 'templates', templateName),
   ];
-
-  return possiblePaths[0];
 }
 
 /**
@@ -111,24 +138,24 @@ export async function projectGenerator(
     const { targetDir, stack, name, description, version, includeDocker } =
       options;
 
-    let templatePath = getTemplatePath(stack);
+    const possiblePaths = getTemplatePaths(stack);
 
-    if (!(await exists(templatePath))) {
-      const templateName = `${stack.framework}-${stack.orm}-${stack.database}`;
-      const altPath = path.resolve(
-        process.cwd(),
-        'src',
-        'templates',
-        templateName
-      );
-      if (await exists(altPath)) {
-        templatePath = altPath;
-      } else {
-        spinner.fail('Template not found');
-        throw new Error(
-          `Template not found for stack: ${stack.framework}-${stack.orm}-${stack.database}`
-        );
+    // Try each possible path until we find one that exists
+    let templatePath: string | null = null;
+    for (const possiblePath of possiblePaths) {
+      if (await exists(possiblePath)) {
+        templatePath = possiblePath;
+        break;
       }
+    }
+
+    if (!templatePath) {
+      spinner.fail('Template not found');
+      logger.error(`Tried the following paths:`);
+      possiblePaths.forEach((p) => logger.error(`  - ${p}`));
+      throw new Error(
+        `Template not found for stack: ${stack.framework}-${stack.orm}-${stack.database}`
+      );
     }
 
     spinner.text = 'Creating project structure...';
