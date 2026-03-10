@@ -1,17 +1,11 @@
-/**
- * Project Configuration Prompts
- *
- * This module handles interactive prompts for gathering project configuration
- * such as project name, description, and other project-level settings.
- */
-
 import inquirer from 'inquirer';
 import { resolvePath } from '../utils/pathUtils';
 import { existsSync, readDir } from '../utils/fileSystem';
 import { ProjectConfig } from '../types';
 
 /**
- * Prompts the user for project configuration
+ * Prompts user for project configuration
+ * @returns {Promise<ProjectConfig>} Project configuration object
  */
 export async function projectPrompt(): Promise<ProjectConfig> {
   const answers = await inquirer.prompt([
@@ -23,7 +17,6 @@ export async function projectPrompt(): Promise<ProjectConfig> {
         if (!input.trim()) {
           return 'Project name cannot be empty';
         }
-        // Check for valid package name
         if (!/^[a-z0-9-]+$/.test(input.toLowerCase())) {
           return 'Project name can only contain lowercase letters, numbers, and hyphens';
         }
@@ -44,7 +37,6 @@ export async function projectPrompt(): Promise<ProjectConfig> {
       message: 'Project version:',
       default: '1.0.0',
       validate: (input: string) => {
-        // Basic semver validation
         if (!/^\d+\.\d+\.\d+/.test(input)) {
           return 'Version must follow semantic versioning (e.g., 1.0.0)';
         }

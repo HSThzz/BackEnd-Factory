@@ -1,10 +1,3 @@
-/**
- * Template Engine
- *
- * This module provides functionality for processing and rendering template files
- * with variable substitution and conditional logic.
- */
-
 import Handlebars from 'handlebars';
 import { readFile } from '../utils/fileSystem';
 
@@ -28,6 +21,9 @@ Handlebars.registerHelper('capitalize', (str: string) => {
 
 /**
  * Renders a template file with the provided data
+ * @param {string} templatePath - Path to template file
+ * @param {Record<string, unknown>} data - Data to inject into template
+ * @returns {Promise<string>} Rendered template content
  */
 export async function renderTemplate(
   templatePath: string,
@@ -40,6 +36,9 @@ export async function renderTemplate(
 
 /**
  * Renders a template string with the provided data
+ * @param {string} templateString - Template string
+ * @param {Record<string, unknown>} data - Data to inject into template
+ * @returns {string} Rendered template content
  */
 export function renderTemplateString(
   templateString: string,

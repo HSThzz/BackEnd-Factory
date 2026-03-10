@@ -1,16 +1,10 @@
-/**
- * Command Line Arguments Parser
- *
- * This module handles parsing and validation of command line arguments
- * passed to the CLI tool.
- */
-
 import { Command } from 'commander';
 import { createProject } from '../commands/createProject';
 import { generateResource } from '../commands/generateResource';
 
 /**
- * Sets up and returns the CLI program with all commands
+ * Sets up and configures all CLI commands
+ * @returns {Command} Configured Commander.js program instance
  */
 export function setupCommands(): Command {
   const program = new Command();

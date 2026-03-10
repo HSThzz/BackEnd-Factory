@@ -1,9 +1,3 @@
-/**
- * Shared Type Definitions
- *
- * This module defines TypeScript types and interfaces used throughout the application.
- */
-
 import { Framework } from '../constants/frameworks';
 import { ORM } from '../constants/orms';
 import { Database } from '../constants/databases';

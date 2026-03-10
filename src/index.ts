@@ -1,8 +1,6 @@
 /**
- * Main Module Entry Point
- *
- * This file serves as the main entry point for the create-backend-api package.
- * It exports the core functionality and CLI runner.
+ * @fileoverview Main entry point for create-backend-api package
+ * @module index
  */
 
 export { run } from './cli/run';

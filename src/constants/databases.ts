@@ -1,8 +1,5 @@
 /**
- * Database Constants
- *
- * This module defines constants and metadata for supported databases
- * (PostgreSQL, MySQL, SQLite, etc.).
+ * @fileoverview Database constants and metadata
  */
 
 export const DATABASES = {

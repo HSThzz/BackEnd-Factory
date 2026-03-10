@@ -1,15 +1,10 @@
-/**
- * File System Utilities
- *
- * This module provides utility functions for file and directory operations,
- * such as copying files, creating directories, and reading/writing files.
- */
-
 import fs from 'fs-extra';
 import path from 'path';
 
 /**
  * Ensures a directory exists, creating it if necessary
+ * @param {string} dirPath - Directory path
+ * @returns {Promise<void>}
  */
 export async function ensureDir(dirPath: string): Promise<void> {
   await fs.ensureDir(dirPath);
@@ -17,6 +12,9 @@ export async function ensureDir(dirPath: string): Promise<void> {
 
 /**
  * Copies a file or directory from source to destination
+ * @param {string} src - Source path
+ * @param {string} dest - Destination path
+ * @returns {Promise<void>}
  */
 export async function copyFile(src: string, dest: string): Promise<void> {
   await fs.copy(src, dest);
@@ -24,6 +22,9 @@ export async function copyFile(src: string, dest: string): Promise<void> {
 
 /**
  * Writes content to a file, creating parent directories if necessary
+ * @param {string} filePath - File path
+ * @param {string} content - File content
+ * @returns {Promise<void>}
  */
 export async function writeFile(
   filePath: string,
@@ -35,6 +36,8 @@ export async function writeFile(
 
 /**
  * Reads the contents of a file
+ * @param {string} filePath - File path
+ * @returns {Promise<string>} File content
  */
 export async function readFile(filePath: string): Promise<string> {
   return await fs.readFile(filePath, 'utf-8');
@@ -42,6 +45,8 @@ export async function readFile(filePath: string): Promise<string> {
 
 /**
  * Checks if a file or directory exists
+ * @param {string} filePath - File or directory path
+ * @returns {Promise<boolean>} True if exists
  */
 export function exists(filePath: string): Promise<boolean> {
   return fs.pathExists(filePath);
@@ -49,6 +54,8 @@ export function exists(filePath: string): Promise<boolean> {
 
 /**
  * Checks if a file or directory exists (synchronous)
+ * @param {string} filePath - File or directory path
+ * @returns {boolean} True if exists
  */
 export function existsSync(filePath: string): boolean {
   return fs.existsSync(filePath);
@@ -56,6 +63,8 @@ export function existsSync(filePath: string): boolean {
 
 /**
  * Removes a file or directory
+ * @param {string} filePath - File or directory path
+ * @returns {Promise<void>}
  */
 export async function remove(filePath: string): Promise<void> {
   await fs.remove(filePath);
@@ -63,6 +72,8 @@ export async function remove(filePath: string): Promise<void> {
 
 /**
  * Reads a directory and returns the list of items
+ * @param {string} dirPath - Directory path
+ * @returns {Promise<string[]>} Array of item names
  */
 export async function readDir(dirPath: string): Promise<string[]> {
   return await fs.readdir(dirPath);
@@ -70,6 +81,8 @@ export async function readDir(dirPath: string): Promise<string[]> {
 
 /**
  * Gets file stats
+ * @param {string} filePath - File path
+ * @returns {Promise<fs.Stats>} File stats
  */
 export async function getStats(filePath: string): Promise<fs.Stats> {
   return await fs.stat(filePath);
@@ -77,6 +90,8 @@ export async function getStats(filePath: string): Promise<fs.Stats> {
 
 /**
  * Checks if a path is a directory
+ * @param {string} filePath - Path to check
+ * @returns {Promise<boolean>} True if directory
  */
 export async function isDirectory(filePath: string): Promise<boolean> {
   try {
@@ -89,6 +104,8 @@ export async function isDirectory(filePath: string): Promise<boolean> {
 
 /**
  * Checks if a path is a file
+ * @param {string} filePath - Path to check
+ * @returns {Promise<boolean>} True if file
  */
 export async function isFile(filePath: string): Promise<boolean> {
   try {

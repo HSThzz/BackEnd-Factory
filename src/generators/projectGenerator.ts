@@ -1,13 +1,6 @@
-/**
- * Project Generator
- *
- * This module handles the generation of a complete backend project structure
- * based on the selected technology stack and project configuration.
- */
-
 import ora from 'ora';
 import path from 'path';
-import { joinPath, resolvePath } from '../utils/pathUtils';
+import { joinPath } from '../utils/pathUtils';
 import {
   ensureDir,
   copyFile,
@@ -24,6 +17,11 @@ import { ProjectGenerationOptions } from '../types';
 
 /**
  * Gets the template directory path based on the selected stack
+ * @param {Object} stack - Stack configuration
+ * @param {string} stack.framework - Framework name
+ * @param {string} stack.orm - ORM name
+ * @param {string} stack.database - Database name
+ * @returns {string} Template directory path
  */
 function getTemplatePath(stack: {
   framework: string;
@@ -31,23 +29,22 @@ function getTemplatePath(stack: {
   database: string;
 }): string {
   const templateName = `${stack.framework}-${stack.orm}-${stack.database}`;
-  
-  // Try to resolve from source directory (development) or dist (production)
+
   const possiblePaths = [
-    // Development: from src/generators to src/templates
     path.resolve(__dirname, '..', 'templates', templateName),
-    // Production: from dist/generators to dist/templates (but templates are in src)
     path.resolve(__dirname, '..', '..', 'src', 'templates', templateName),
-    // Alternative: from project root
     path.resolve(process.cwd(), 'src', 'templates', templateName),
   ];
 
-  // Return the first path that exists (we'll check existence in the caller)
   return possiblePaths[0];
 }
 
 /**
  * Recursively processes template files and directories
+ * @param {string} sourceDir - Source template directory
+ * @param {string} targetDir - Target directory for generated files
+ * @param {Record<string, unknown>} data - Template data
+ * @returns {Promise<void>}
  */
 async function processTemplateDirectory(
   sourceDir: string,
@@ -61,12 +58,10 @@ async function processTemplateDirectory(
     const sourcePath = joinPath(sourceDir, item);
     const targetPath = joinPath(targetDir, item);
 
-    // Skip .gitkeep files (they're just placeholders)
     if (item === '.gitkeep') {
       continue;
     }
 
-    // Skip Docker files if Docker is not included
     if (!includeDocker && (item.startsWith('docker') || item === '.dockerignore')) {
       continue;
     }
@@ -75,21 +70,18 @@ async function processTemplateDirectory(
       await ensureDir(targetPath);
       await processTemplateDirectory(sourcePath, targetPath, data);
     } else if (await isFile(sourcePath)) {
-      // Check if it's a template file (.hbs extension)
       if (item.endsWith('.hbs')) {
         const rendered = await renderTemplate(sourcePath, data);
         const targetFilePath = targetPath.replace(/\.hbs$/, '');
         await writeFile(targetFilePath, rendered);
         logger.info(`Generated: ${targetFilePath}`);
       } else {
-        // Check if file content has template variables (for Docker files, etc.)
         const content = await readFile(sourcePath);
         if (content.includes('{{')) {
           const rendered = await renderTemplateString(content, data);
           await writeFile(targetPath, rendered);
           logger.info(`Generated: ${targetPath}`);
         } else {
-          // Copy file as-is
           await copyFile(sourcePath, targetPath);
           logger.info(`Copied: ${targetPath}`);
         }
@@ -99,7 +91,10 @@ async function processTemplateDirectory(
 }
 
 /**
- * Generates a complete backend project
+ * Generates a complete backend project structure
+ * @param {ProjectGenerationOptions} options - Project generation options
+ * @returns {Promise<void>}
+ * @throws {Error} If template not found or generation fails
  */
 export async function projectGenerator(
   options: ProjectGenerationOptions
@@ -109,10 +104,8 @@ export async function projectGenerator(
   try {
     const { targetDir, stack, name, description, version, includeDocker } = options;
 
-    // Check if template exists - try multiple possible paths
     let templatePath = getTemplatePath(stack);
-    
-    // Try alternative paths if first doesn't exist
+
     if (!(await exists(templatePath))) {
       const templateName = `${stack.framework}-${stack.orm}-${stack.database}`;
       const altPath = path.resolve(process.cwd(), 'src', 'templates', templateName);
@@ -128,10 +121,8 @@ export async function projectGenerator(
 
     spinner.text = 'Creating project structure...';
 
-    // Create target directory
     await ensureDir(targetDir);
 
-    // Prepare template data
     const templateData = {
       projectName: name,
       projectDescription: description,
@@ -141,14 +132,12 @@ export async function projectGenerator(
       database: stack.database,
       nodeVersion: options.nodeVersion || '18',
       includeDocker: includeDocker || false,
-      // Additional computed values
       projectNameCapitalized:
         name.charAt(0).toUpperCase() + name.slice(1).replace(/-/g, ' '),
     };
 
     spinner.text = 'Processing templates...';
 
-    // Process template directory
     await processTemplateDirectory(templatePath, targetDir, templateData);
 
     spinner.succeed('Project generated successfully!');

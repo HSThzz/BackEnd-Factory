@@ -1,10 +1,3 @@
-/**
- * Technology Stack Prompts
- *
- * This module handles interactive prompts for selecting the technology stack:
- * framework (Express/Fastify), ORM (TypeORM/Prisma), and database type.
- */
-
 import inquirer from 'inquirer';
 import { FRAMEWORKS, FRAMEWORK_NAMES, Framework } from '../constants/frameworks';
 import { ORMS, ORM_NAMES, ORM } from '../constants/orms';
@@ -12,7 +5,8 @@ import { DATABASES, DATABASE_NAMES, Database } from '../constants/databases';
 import { StackSelection } from '../types';
 
 /**
- * Prompts the user to select a technology stack
+ * Prompts user to select technology stack (framework, ORM, database)
+ * @returns {Promise<StackSelection>} Selected technology stack
  */
 export async function stackPrompt(): Promise<StackSelection> {
   const frameworkChoices = [
@@ -52,7 +46,6 @@ export async function stackPrompt(): Promise<StackSelection> {
     },
   ];
 
-  // Prompt for framework
   const { framework } = await inquirer.prompt<{ framework: string }>({
     type: 'select',
     name: 'framework',
@@ -60,7 +53,6 @@ export async function stackPrompt(): Promise<StackSelection> {
     choices: frameworkChoices,
   });
 
-  // Prompt for ORM
   const { orm } = await inquirer.prompt<{ orm: string }>({
     type: 'select',
     name: 'orm',
@@ -68,7 +60,6 @@ export async function stackPrompt(): Promise<StackSelection> {
     choices: ormChoices,
   });
 
-  // Prompt for database
   const { database } = await inquirer.prompt<{ database: string }>({
     type: 'select',
     name: 'database',
