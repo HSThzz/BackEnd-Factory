@@ -10,7 +10,7 @@
     "build": "tsc",
     "dev": "tsc --watch",
     "dev:cli": "ts-node bin/create-backend-api.ts",
-    "lint": "eslint src --ext .ts",
+    "lint": "eslint src bin",
     "format": "prettier --write \"src/**/*.ts\" \"bin/**/*.ts\"",
     "format:check": "prettier --check \"src/**/*.ts\" \"bin/**/*.ts\"",
     "test": "jest"
@@ -46,13 +46,13 @@
     "node": ">=14.0.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@types/fs-extra": "^11.0.4",
     "@types/inquirer": "^9.0.9",
     "@types/jest": "^30.0.0",
     "@types/node": "^25.4.0",
-    "@typescript-eslint/eslint-plugin": "^8.57.0",
-    "@typescript-eslint/parser": "^8.57.0",
     "eslint": "^10.0.3",
+    "typescript-eslint": "^8.57.0",
     "jest": "^30.3.0",
     "prettier": "^3.8.1",
     "ts-jest": "^29.4.6",
