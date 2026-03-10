@@ -1,0 +1,32 @@
+{
+  "name": "create-backend-api",
+  "version": "0.1.0",
+  "description": "A CLI tool to generate Node.js backend projects with TypeScript, Express/Fastify, and TypeORM/Prisma",
+  "main": "dist/index.js",
+  "bin": {
+    "create-backend-api": "dist/bin/create-backend-api.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "lint": "eslint src --ext .ts",
+    "test": "jest"
+  },
+  "keywords": [
+    "cli",
+    "backend",
+    "generator",
+    "typescript",
+    "express",
+    "fastify",
+    "typeorm",
+    "prisma"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "devDependencies": {},
+  "dependencies": {}
+}
