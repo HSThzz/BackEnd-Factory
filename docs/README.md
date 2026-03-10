@@ -6,7 +6,8 @@ Welcome to the `create-backend-api` documentation. This directory contains compr
 
 ### Getting Started
 
-- **[Installation Guide](./INSTALLATION.md)** - How to install and set up the CLI
+- **[Getting Started Guide](./GETTING_STARTED.md)** - Quick start and first steps
+- **[Installation Guide](./INSTALLATION.md)** - Detailed installation instructions
 - **[Usage Guide](./USAGE.md)** - Complete usage instructions and examples
 
 ### Guides

@@ -16,36 +16,52 @@
 
 ## 📋 Supported Stacks
 
-| Framework | ORM | Database | Status |
-|-----------|-----|----------|--------|
-| Express | TypeORM | PostgreSQL | ✅ |
-| Express | Prisma | PostgreSQL | ✅ |
-| Fastify | TypeORM | PostgreSQL | ✅ |
+| Framework | ORM     | Database   | Status |
+| --------- | ------- | ---------- | ------ |
+| Express   | TypeORM | PostgreSQL | ✅     |
+| Express   | Prisma  | PostgreSQL | ✅     |
+| Fastify   | TypeORM | PostgreSQL | ✅     |
 
 ## 🚀 Quick Start
 
-### Installation
-
-```bash
-npm install -g create-backend-api
-```
-
-Or use with `npx`:
+### The Easiest Way (No Installation Required)
 
 ```bash
 npx create-backend-api create
 ```
 
-### Create a New Project
+That's it! The CLI will:
+
+- Download automatically (if needed)
+- Guide you through project setup
+- Generate your backend project
+- Clean up after itself
+
+### Alternative: Install Globally
 
 ```bash
+# Install once
+npm install -g create-backend-api
+
+# Use from anywhere
 create-backend-api create
 ```
 
-The CLI will guide you through:
-1. Project configuration (name, description, version)
-2. Technology stack selection (framework, ORM, database)
-3. Docker configuration (optional)
+### What Happens Next?
+
+The CLI will interactively ask you:
+
+1. **Project name** - e.g., `my-api`
+2. **Description** - Brief project description
+3. **Version** - Project version (default: `1.0.0`)
+4. **Target directory** - Where to create the project
+5. **Node.js version** - For Docker (default: `18`)
+6. **Docker?** - Include Docker configuration (Yes/No)
+7. **Framework** - Express or Fastify
+8. **ORM** - TypeORM or Prisma
+9. **Database** - PostgreSQL, MySQL, or SQLite
+
+Then your project is ready! 🎉
 
 ### Example
 
@@ -124,9 +140,11 @@ Every generated project comes with:
 
 ## 📚 Documentation
 
+- [Getting Started](./docs/GETTING_STARTED.md) - Quick start guide
 - [Installation Guide](./docs/INSTALLATION.md) - Detailed installation instructions
 - [Usage Guide](./docs/USAGE.md) - Complete usage documentation
 - [Architecture](./docs/ARCHITECTURE.md) - DDD architecture explanation
+- [Examples](./docs/EXAMPLES.md) - Practical examples
 - [Troubleshooting](./docs/TROUBLESHOOTING.md) - Common issues and solutions
 
 ## 🛠️ Development

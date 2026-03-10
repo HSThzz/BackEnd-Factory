@@ -49,11 +49,11 @@ $ create-backend-api create
 ? Target directory: ./blog-api
 ? Node.js version (optional): 18
 ? Include Docker configuration? Yes
-ℹ 
+ℹ
 ? Select a framework: Express
 ? Select an ORM: TypeORM
 ? Select a database: PostgreSQL
-ℹ 
+ℹ
 
 ✓ Project generated successfully!
 ✓ Project created at: /path/to/blog-api
@@ -76,6 +76,7 @@ create-backend-api c [options]
 Creates a new backend project with the selected technology stack.
 
 **Options:**
+
 - `--help` - Show help message
 
 ### Generate Command

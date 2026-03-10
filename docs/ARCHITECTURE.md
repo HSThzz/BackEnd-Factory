@@ -164,6 +164,7 @@ Infrastructure ←────┘
 ```
 
 **Rules:**
+
 - Outer layers can depend on inner layers
 - Inner layers **never** depend on outer layers
 - Domain layer has **no dependencies** on other layers
@@ -202,6 +203,7 @@ Add new features by extending existing layers without breaking existing code.
 ### Step-by-Step Guide
 
 1. **Create Domain Entity** (`src/domain/entities/`)
+
    ```typescript
    export class Product extends BaseEntity {
      // Properties
@@ -209,6 +211,7 @@ Add new features by extending existing layers without breaking existing code.
    ```
 
 2. **Define Repository Interface** (`src/domain/repositories/`)
+
    ```typescript
    export interface IProductRepository extends IBaseRepository<Product> {
      // Custom methods
@@ -216,6 +219,7 @@ Add new features by extending existing layers without breaking existing code.
    ```
 
 3. **Implement Repository** (`src/infrastructure/database/repositories/`)
+
    ```typescript
    export class ProductRepository extends BaseRepository<Product> {
      // Implementation
@@ -223,6 +227,7 @@ Add new features by extending existing layers without breaking existing code.
    ```
 
 4. **Create DTOs** (`src/application/dtos/`)
+
    ```typescript
    export interface CreateProductDTO {
      // Fields
@@ -230,6 +235,7 @@ Add new features by extending existing layers without breaking existing code.
    ```
 
 5. **Implement Use Case** (`src/application/use-cases/`)
+
    ```typescript
    export class CreateProductUseCase {
      // Business logic
@@ -237,6 +243,7 @@ Add new features by extending existing layers without breaking existing code.
    ```
 
 6. **Create Controller** (`src/presentation/controllers/`)
+
    ```typescript
    export class ProductController extends BaseController {
      // HTTP handlers
@@ -245,9 +252,7 @@ Add new features by extending existing layers without breaking existing code.
 
 7. **Add Routes** (`src/presentation/routes/`)
    ```typescript
-   router.post('/products', (req, res) => 
-     productController.create(req, res)
-   );
+   router.post('/products', (req, res) => productController.create(req, res));
    ```
 
 ## Best Practices

@@ -90,12 +90,14 @@ npm uninstall -g create-backend-api
 If you get a "command not found" error:
 
 1. **Check Node.js installation:**
+
    ```bash
    node --version
    npm --version
    ```
 
 2. **Verify npm global bin path:**
+
    ```bash
    npm config get prefix
    ```
