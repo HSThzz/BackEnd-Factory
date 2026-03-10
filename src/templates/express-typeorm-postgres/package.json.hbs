@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts",
-    "clean": "rm -rf dist",
+    "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "build": "tsc",
     "start": "node dist/index.js",
@@ -34,6 +34,7 @@
     "prettier": "^3.8.0",
     "typescript": "^5.1.6",
     "ts-node-dev": "^2.0.0",
-    "typeorm-ts-node-commonjs": "^0.3.12"
+    "typeorm-ts-node-commonjs": "^0.3.12",
+    "rimraf": "^5.0.5"
   }
 }
