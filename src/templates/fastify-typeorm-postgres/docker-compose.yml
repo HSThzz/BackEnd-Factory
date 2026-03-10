@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: {{projectName}}-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - HOST=0.0.0.0
+      - DB_HOST=postgres
+      - DB_PORT=5432
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=postgres
+      - DB_DATABASE={{projectName}}
+    depends_on:
+      - postgres
+    volumes:
+      - ./src:/app/src
+      - ./dist:/app/dist
+    networks:
+      - {{projectName}}-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: {{projectName}}-postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB={{projectName}}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - {{projectName}}-network
+
+volumes:
+  postgres_data:
+
+networks:
+  {{projectName}}-network:
+    driver: bridge
