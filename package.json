@@ -11,6 +11,8 @@
     "dev": "tsc --watch",
     "dev:cli": "ts-node bin/create-backend-api.ts",
     "lint": "eslint src --ext .ts",
+    "format": "prettier --write \"src/**/*.ts\" \"bin/**/*.ts\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"bin/**/*.ts\"",
     "test": "jest"
   },
   "keywords": [
