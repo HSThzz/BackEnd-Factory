@@ -33,4 +33,4 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Error handling middleware
 - TypeScript support
 
-[0.1.0]: https://github.com/your-username/create-backend-api/releases/tag/v0.1.0
+[0.1.0]: https://github.com/HSThzz/create-backend-api/releases/tag/v0.1.0

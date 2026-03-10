@@ -34,7 +34,7 @@ If you want to use the latest development version:
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/create-backend-api.git
+git clone https://github.com/HSThzz/create-backend-api.git
 cd create-backend-api
 
 # Install dependencies

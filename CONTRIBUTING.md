@@ -55,7 +55,7 @@ We welcome feature suggestions! Please open an issue with:
 
 ```bash
 # Clone your fork
-git clone https://github.com/your-username/create-backend-api.git
+git clone https://github.com/HSThzz/create-backend-api.git
 cd create-backend-api
 
 # Install dependencies

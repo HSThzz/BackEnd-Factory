@@ -22,7 +22,7 @@ Welcome to the `create-backend-api` documentation. This directory contains compr
 ## Quick Links
 
 - [Main README](../README.md) - Project overview and quick start
-- [GitHub Repository](https://github.com/your-username/create-backend-api) - Source code and issues
+- [GitHub Repository](https://github.com/HSThzz/create-backend-api) - Source code and issues
 
 ## Need Help?
 

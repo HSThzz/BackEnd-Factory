@@ -25,18 +25,19 @@
     "typeorm",
     "prisma"
   ],
-  "author": "",
+  "author": "Thiago Esmerio Fernandes",
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "https://github.com/your-username/create-backend-api.git"
+    "url": "https://github.com/HSThzz/create-backend-api.git"
   },
   "bugs": {
-    "url": "https://github.com/your-username/create-backend-api/issues"
+    "url": "https://github.com/HSThzz/create-backend-api/issues"
   },
-  "homepage": "https://github.com/your-username/create-backend-api#readme",
+  "homepage": "https://github.com/HSThzz/create-backend-api#readme",
   "files": [
     "dist",
+    "src/templates",
     "bin",
     "README.md",
     "LICENSE"

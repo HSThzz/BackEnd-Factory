@@ -158,7 +158,7 @@ Every generated project comes with:
 
 ```bash
 # Clone the repository
-git clone <repository-url>
+git clone https://github.com/HSThzz/create-backend-api.git
 cd create-backend-api
 
 # Install dependencies

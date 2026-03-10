@@ -31,8 +31,11 @@ function getTemplatePath(stack: {
   const templateName = `${stack.framework}-${stack.orm}-${stack.database}`;
 
   const possiblePaths = [
-    path.resolve(__dirname, '..', 'templates', templateName),
+    // Production: templates in src/templates (npm package)
     path.resolve(__dirname, '..', '..', 'src', 'templates', templateName),
+    // Development: templates in src/templates (source)
+    path.resolve(__dirname, '..', 'templates', templateName),
+    // Alternative: from project root
     path.resolve(process.cwd(), 'src', 'templates', templateName),
   ];
 
