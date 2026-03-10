@@ -1,0 +1,46 @@
+import 'reflect-metadata';
+import express from 'express';
+import { AppDataSource } from './infrastructure/config/database';
+import routes from './presentation/routes';
+import { errorHandler } from './presentation/middleware/errorHandler';
+import { notFoundHandler } from './presentation/middleware/notFoundHandler';
+
+const app = express();
+const PORT = process.env.PORT || 3000;
+
+// Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+// Routes
+app.use('/api', routes);
+
+// Error handling
+app.use(notFoundHandler);
+app.use(errorHandler);
+
+// Initialize database and start server
+AppDataSource.initialize()
+  .then(() => {
+    console.log('Database connected successfully');
+
+    app.listen(PORT, () => {
+      console.log(`teste server running on port ${PORT}`);
+      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
+    });
+  })
+  .catch((error) => {
+    console.error('Database connection error:', error);
+    process.exit(1);
+  });
+
+// Graceful shutdown
+process.on('SIGTERM', async () => {
+  await AppDataSource.destroy();
+  process.exit(0);
+});
+
+process.on('SIGINT', async () => {
+  await AppDataSource.destroy();
+  process.exit(0);
+});

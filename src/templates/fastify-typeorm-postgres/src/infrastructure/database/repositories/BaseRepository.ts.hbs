@@ -24,7 +24,7 @@ export class BaseRepository<T extends BaseEntity> implements IBaseRepository<T> 
   }
 
   async update(id: string, data: Partial<T>): Promise<T> {
-    await this.repository.update(id, data);
+    await this.repository.update(id, data as any);
     const updated = await this.findById(id);
     if (!updated) {
       throw new Error('Entity not found after update');
