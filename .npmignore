@@ -1,14 +1,43 @@
+# Source files
 src/
+bin/
 tests/
-docs/
-.github/
-node_modules/
 *.ts
 !dist/**/*.d.ts
+
+# Configuration files (keep only what's needed)
 tsconfig.json
-.gitignore
+jest.config.*
 .eslintrc*
 .prettierrc*
-jest.config.*
-*.test.ts
-*.spec.ts
+.editorconfig
+
+# Development files
+.git/
+.github/
+.gitignore
+.npmignore
+
+# Documentation (keep README and LICENSE)
+docs/
+CHANGELOG.md
+CONTRIBUTING.md
+
+# Dependencies
+node_modules/
+
+# Build artifacts
+*.tsbuildinfo
+coverage/
+
+# Environment
+.env
+.env.*
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
