@@ -81,6 +81,12 @@ export async function projectPrompt(): Promise<ProjectConfig> {
         return true;
       },
     },
+    {
+      type: 'confirm',
+      name: 'includeDocker',
+      message: 'Include Docker configuration?',
+      default: true,
+    },
   ]);
 
   const targetDir = resolvePath(answers.targetDir);
@@ -91,5 +97,6 @@ export async function projectPrompt(): Promise<ProjectConfig> {
     version: answers.version,
     targetDir,
     nodeVersion: answers.nodeVersion || undefined,
+    includeDocker: answers.includeDocker || false,
   };
 }

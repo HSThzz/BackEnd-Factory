@@ -55,6 +55,7 @@ async function processTemplateDirectory(
   data: Record<string, unknown>
 ): Promise<void> {
   const items = await readDir(sourceDir);
+  const includeDocker = data.includeDocker === true;
 
   for (const item of items) {
     const sourcePath = joinPath(sourceDir, item);
@@ -62,6 +63,11 @@ async function processTemplateDirectory(
 
     // Skip .gitkeep files (they're just placeholders)
     if (item === '.gitkeep') {
+      continue;
+    }
+
+    // Skip Docker files if Docker is not included
+    if (!includeDocker && (item.startsWith('docker') || item === '.dockerignore')) {
       continue;
     }
 
@@ -75,22 +81,18 @@ async function processTemplateDirectory(
         const targetFilePath = targetPath.replace(/\.hbs$/, '');
         await writeFile(targetFilePath, rendered);
         logger.info(`Generated: ${targetFilePath}`);
-      } else if (item.includes('{{') || item.includes('.example')) {
-        // Files with template variables in name or .example files should be processed
-        // Check if file content has template variables
+      } else {
+        // Check if file content has template variables (for Docker files, etc.)
         const content = await readFile(sourcePath);
         if (content.includes('{{')) {
           const rendered = await renderTemplateString(content, data);
           await writeFile(targetPath, rendered);
           logger.info(`Generated: ${targetPath}`);
         } else {
+          // Copy file as-is
           await copyFile(sourcePath, targetPath);
           logger.info(`Copied: ${targetPath}`);
         }
-      } else {
-        // Copy file as-is
-        await copyFile(sourcePath, targetPath);
-        logger.info(`Copied: ${targetPath}`);
       }
     }
   }
@@ -105,7 +107,7 @@ export async function projectGenerator(
   const spinner = ora('Generating project...').start();
 
   try {
-    const { targetDir, stack, name, description, version } = options;
+    const { targetDir, stack, name, description, version, includeDocker } = options;
 
     // Check if template exists - try multiple possible paths
     let templatePath = getTemplatePath(stack);
@@ -137,6 +139,8 @@ export async function projectGenerator(
       framework: stack.framework,
       orm: stack.orm,
       database: stack.database,
+      nodeVersion: options.nodeVersion || '18',
+      includeDocker: includeDocker || false,
       // Additional computed values
       projectNameCapitalized:
         name.charAt(0).toUpperCase() + name.slice(1).replace(/-/g, ' '),

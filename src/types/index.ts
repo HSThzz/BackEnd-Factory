@@ -1,6 +1,6 @@
 /**
  * Shared Type Definitions
- * 
+ *
  * This module defines TypeScript types and interfaces used throughout the application.
  */
 
@@ -26,6 +26,7 @@ export interface ProjectConfig {
   version: string;
   targetDir: string;
   nodeVersion?: string;
+  includeDocker?: boolean;
 }
 
 /**

@@ -1,70 +1,43 @@
-# {{projectName}}
+#
+{{projectName}}
 
 {{projectDescription}}
 
-## Tech Stack
+## Tech Stack - **Framework**: Express - **ORM**: TypeORM - **Database**:
+PostgreSQL - **Language**: TypeScript ## Getting Started ### Prerequisites -
+Node.js >= 18 - PostgreSQL ### Installation 1. Install dependencies: ```bash npm
+install ``` 2. Set up environment variables: ```bash cp .env.example .env # Edit
+.env with your database credentials ``` 3. Run the development server: ```bash
+npm run dev ``` ### Build ```bash npm run build npm start ```
 
-- **Framework**: Express
-- **ORM**: TypeORM
-- **Database**: PostgreSQL
-- **Language**: TypeScript
+{{#if includeDocker}}
+  ### Docker This project includes Docker configuration for easy development and
+  deployment. #### Using Docker Compose ```bash # Start all services (app +
+  database) docker-compose up # Start in detached mode docker-compose up -d #
+  Stop services docker-compose down # Rebuild and start docker-compose up
+  --build ``` #### Using Docker only ```bash # Build image docker build -t
+  {{projectName}}
+  . # Run container docker run -p 3000:3000
+  {{projectName}}
+  ``` **Note**: Make sure to set up your `.env` file with the correct database
+  credentials when using Docker.
+{{/if}}
 
-## Getting Started
-
-### Prerequisites
-
-- Node.js >= 18
-- PostgreSQL
-
-### Installation
-
-1. Install dependencies:
-```bash
-npm install
-```
-
-2. Set up environment variables:
-```bash
-cp .env.example .env
-# Edit .env with your database credentials
-```
-
-3. Run the development server:
-```bash
-npm run dev
-```
-
-### Build
-
-```bash
-npm run build
-npm start
-```
-
-### Code Quality
-
-This project comes pre-configured with ESLint and Prettier:
-
-```bash
-# Format code
-npm run format
-
-# Check formatting
-npm run format:check
-
-# Lint code
-npm run lint
-```
-
-**Auto-formatting**: If you're using VS Code or Cursor, the project is configured to automatically format on save. Just make sure you have the Prettier extension installed.
-
-## Project Structure
-
-```
-src/
-├── config/       # Configuration files
-├── entities/     # TypeORM entities
-├── controllers/  # Route controllers
-├── routes/       # Route definitions
-└── middleware/   # Express middleware
+### Code Quality This project comes pre-configured with ESLint and Prettier:
+```bash # Format code npm run format # Check formatting npm run format:check #
+Lint code npm run lint ``` **Auto-formatting**: If you're using VS Code or
+Cursor, the project is configured to automatically format on save. Just make
+sure you have the Prettier extension installed. ## Docker This project includes
+Docker configuration for easy development and deployment. ### Using Docker
+Compose ```bash # Start all services (app + database) docker-compose up # Start
+in detached mode docker-compose up -d # Stop services docker-compose down #
+Rebuild and start docker-compose up --build ``` ### Using Docker only ```bash #
+Build image docker build -t
+{{projectName}}
+. # Run container docker run -p 3000:3000
+{{projectName}}
+``` **Note**: Make sure to set up your `.env` file with the correct database
+credentials when using Docker. ## Project Structure ``` src/ ├── config/ #
+Configuration files ├── entities/ # TypeORM entities ├── controllers/ # Route
+controllers ├── routes/ # Route definitions └── middleware/ # Express middleware
 ```
