@@ -55,9 +55,22 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build
+        run: |
+          echo "Building project..."
+          npm run build
+          echo "Build completed. Checking output..."
 
       - name: Check build output
         run: |
-          test -f dist/bin/create-backend-api.js
-          test -f dist/index.js
+          echo "Checking build output..."
+          echo "Dist directory contents:"
+          ls -la dist/ || echo "dist directory not found"
+          echo ""
+          echo "Dist/bin directory contents:"
+          ls -la dist/bin/ || echo "dist/bin directory not found"
+          echo ""
+          echo "Dist/src directory contents:"
+          ls -la dist/src/ || echo "dist/src directory not found"
+          echo ""
+          test -f dist/bin/create-backend-api.js && echo "✅ dist/bin/create-backend-api.js exists" || (echo "❌ dist/bin/create-backend-api.js not found" && find dist -name "*.js" | head -10 && exit 1)
+          test -f dist/src/index.js && echo "✅ dist/src/index.js exists" || (echo "❌ dist/src/index.js not found" && exit 1)
