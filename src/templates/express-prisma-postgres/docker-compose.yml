@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: {{projectName}}-app
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - PORT=3000
+      - DATABASE_URL=postgresql://postgres:postgres@postgres:5432/{{projectName}}?schema=public
+    depends_on:
+      - postgres
+    volumes:
+      - ./src:/app/src
+      - ./dist:/app/dist
+      - ./prisma:/app/prisma
+    networks:
+      - {{projectName}}-network
+
+  postgres:
+    image: postgres:15-alpine
+    container_name: {{projectName}}-postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB={{projectName}}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - {{projectName}}-network
+
+volumes:
+  postgres_data:
+
+networks:
+  {{projectName}}-network:
+    driver: bridge
