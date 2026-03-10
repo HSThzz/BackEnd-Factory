@@ -1,0 +1,19 @@
+import { FastifyInstance } from 'fastify';
+import { HealthController } from '../controllers/HealthController';
+
+const healthController = new HealthController();
+
+export async function routes(fastify: FastifyInstance) {
+  // Health check
+  fastify.get('/health', async (request, reply) => {
+    return healthController.check(request, reply);
+  });
+
+  // Root route
+  fastify.get('/', async (request, reply) => {
+    return reply.send({
+      message: 'Welcome to {{projectName}} API',
+      version: '{{version}}',
+    });
+  });
+}

@@ -1,0 +1,18 @@
+import { FastifyRequest, FastifyReply } from 'fastify';
+import { AppDataSource } from '../../infrastructure/config/database';
+import { BaseController } from './BaseController';
+
+export class HealthController extends BaseController {
+  async check(request: FastifyRequest, reply: FastifyReply): Promise<FastifyReply> {
+    try {
+      await AppDataSource.query('SELECT 1');
+      return this.success(reply, {
+        status: 'ok',
+        database: 'connected',
+        timestamp: new Date().toISOString(),
+      });
+    } catch (error) {
+      return this.error(reply, 'Database connection failed', 500);
+    }
+  }
+}

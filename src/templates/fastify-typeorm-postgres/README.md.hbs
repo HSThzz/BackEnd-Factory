@@ -8,6 +8,7 @@
 - **ORM**: TypeORM
 - **Database**: PostgreSQL
 - **Language**: TypeScript
+- **Architecture**: DDD (Domain-Driven Design) / Clean Architecture
 
 ## Getting Started
 
@@ -92,7 +93,43 @@ npm run lint
 
 **Auto-formatting**: If you're using VS Code or Cursor, the project is configured to automatically format on save. Just make sure you have the Prettier extension installed.
 
-## Fastify Features
+## Architecture
+
+This project follows **DDD (Domain-Driven Design)** and **Clean Architecture** principles:
+
+### Project Structure
+
+```
+src/
+├── domain/              # Domain Layer (Business Logic)
+│   ├── entities/        # Domain entities
+│   └── repositories/     # Repository interfaces
+│
+├── application/         # Application Layer (Use Cases)
+│   ├── use-cases/       # Business use cases
+│   ├── services/         # Application services
+│   └── dtos/            # Data Transfer Objects
+│
+├── infrastructure/      # Infrastructure Layer (External Concerns)
+│   ├── database/
+│   │   ├── repositories/  # Repository implementations
+│   │   └── migrations/    # Database migrations
+│   └── config/          # Configuration files
+│
+└── presentation/        # Presentation Layer (API)
+    ├── controllers/     # Route controllers
+    ├── routes/          # Route definitions
+    └── middleware/      # Fastify plugins/middleware
+```
+
+### Architecture Principles
+
+- **Separation of Concerns**: Each layer has a specific responsibility
+- **Dependency Inversion**: High-level modules don't depend on low-level modules
+- **Domain-Driven**: Business logic is isolated in the domain layer
+- **Testability**: Each layer can be tested independently
+
+### Fastify Features
 
 Fastify is a fast and low overhead web framework. This project includes:
 
@@ -102,13 +139,11 @@ Fastify is a fast and low overhead web framework. This project includes:
 - TypeScript support
 - Graceful shutdown handling
 
-## Project Structure
+### Adding New Features
 
-```
-src/
-├── config/       # Configuration files
-├── entities/     # TypeORM entities
-├── controllers/  # Route controllers
-├── routes/       # Route definitions
-└── middleware/   # Fastify plugins/middleware
-```
+1. **Create Domain Entity** in `domain/entities/`
+2. **Define Repository Interface** in `domain/repositories/`
+3. **Implement Repository** in `infrastructure/database/repositories/`
+4. **Create Use Case** in `application/use-cases/`
+5. **Create Controller** in `presentation/controllers/`
+6. **Add Routes** in `presentation/routes/`

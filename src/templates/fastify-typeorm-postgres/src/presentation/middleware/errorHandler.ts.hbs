@@ -1,0 +1,26 @@
+import { FastifyError, FastifyRequest, FastifyReply } from 'fastify';
+
+export class AppError extends Error {
+  statusCode: number;
+
+  constructor(message: string, statusCode = 400) {
+    super(message);
+    this.statusCode = statusCode;
+    this.name = 'AppError';
+  }
+}
+
+export async function errorHandler(
+  error: FastifyError | AppError,
+  request: FastifyRequest,
+  reply: FastifyReply
+): Promise<void> {
+  const statusCode = error instanceof AppError ? error.statusCode : error.statusCode || 500;
+  const message = error.message || 'Internal server error';
+
+  reply.status(statusCode).send({
+    success: false,
+    error: message,
+    ...(process.env.NODE_ENV === 'development' && { stack: error.stack }),
+  });
+}

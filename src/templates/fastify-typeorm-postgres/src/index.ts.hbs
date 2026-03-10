@@ -1,6 +1,8 @@
 import 'reflect-metadata';
 import Fastify from 'fastify';
-import { AppDataSource } from './config/database';
+import { AppDataSource } from './infrastructure/config/database';
+import { routes } from './presentation/routes';
+import { errorHandler } from './presentation/middleware/errorHandler';
 
 const fastify = Fastify({
   logger: true,
@@ -9,28 +11,16 @@ const fastify = Fastify({
 const PORT = parseInt(process.env.PORT || '3000', 10);
 const HOST = process.env.HOST || '0.0.0.0';
 
-// Initialize database
+// Register error handler
+fastify.setErrorHandler(errorHandler);
+
+// Initialize database and start server
 AppDataSource.initialize()
   .then(() => {
     console.log('Database connected successfully');
 
     // Register routes
-    fastify.register(async function (fastify) {
-      fastify.get('/', async (request, reply) => {
-        return { message: 'Welcome to {{projectName}} API' };
-      });
-    });
-
-    // Health check
-    fastify.get('/health', async (request, reply) => {
-      try {
-        await AppDataSource.query('SELECT 1');
-        return { status: 'ok', database: 'connected' };
-      } catch (error) {
-        reply.code(500);
-        return { status: 'error', database: 'disconnected' };
-      }
-    });
+    fastify.register(routes, { prefix: '/api' });
 
     // Start server
     fastify.listen({ port: PORT, host: HOST }, (err, address) => {
@@ -39,6 +29,7 @@ AppDataSource.initialize()
         process.exit(1);
       }
       console.log(`{{projectName}} server running on ${address}`);
+      console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
     });
   })
   .catch((error) => {

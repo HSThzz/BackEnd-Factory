@@ -1,32 +1,40 @@
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
+import { prisma } from './infrastructure/config/database';
+import routes from './presentation/routes';
+import { errorHandler } from './presentation/middleware/errorHandler';
+import { notFoundHandler } from './presentation/middleware/notFoundHandler';
 
 const app = express();
-const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3000;
 
+// Middleware
 app.use(express.json());
-
-// Health check
-app.get('/health', async (req, res) => {
-  try {
-    await prisma.$queryRaw`SELECT 1`;
-    res.json({ status: 'ok', database: 'connected' });
-  } catch (error) {
-    res.status(500).json({ status: 'error', database: 'disconnected' });
-  }
-});
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
-app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to {{projectName}} API' });
-});
+app.use('/api', routes);
 
+// Error handling
+app.use(notFoundHandler);
+app.use(errorHandler);
+
+// Start server
 app.listen(PORT, () => {
   console.log(`{{projectName}} server running on port ${PORT}`);
+  console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
 // Graceful shutdown
 process.on('beforeExit', async () => {
   await prisma.$disconnect();
+});
+
+process.on('SIGTERM', async () => {
+  await prisma.$disconnect();
+  process.exit(0);
+});
+
+process.on('SIGINT', async () => {
+  await prisma.$disconnect();
+  process.exit(0);
 });

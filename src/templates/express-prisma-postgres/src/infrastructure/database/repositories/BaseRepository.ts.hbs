@@ -1,0 +1,35 @@
+import { PrismaClient } from '@prisma/client';
+import { IBaseRepository } from '../../../domain/repositories/IBaseRepository';
+
+export class BaseRepository<T extends { id: string }> implements IBaseRepository<T> {
+  protected prisma: PrismaClient;
+  protected model: keyof PrismaClient;
+
+  constructor(prisma: PrismaClient, model: keyof PrismaClient) {
+    this.prisma = prisma;
+    this.model = model;
+  }
+
+  async findById(id: string): Promise<T | null> {
+    return (this.prisma[this.model] as any).findUnique({ where: { id } }) as Promise<T | null>;
+  }
+
+  async findAll(): Promise<T[]> {
+    return (this.prisma[this.model] as any).findMany() as Promise<T[]>;
+  }
+
+  async create(data: Partial<T>): Promise<T> {
+    return (this.prisma[this.model] as any).create({ data }) as Promise<T>;
+  }
+
+  async update(id: string, data: Partial<T>): Promise<T> {
+    return (this.prisma[this.model] as any).update({
+      where: { id },
+      data,
+    }) as Promise<T>;
+  }
+
+  async delete(id: string): Promise<void> {
+    await (this.prisma[this.model] as any).delete({ where: { id } });
+  }
+}

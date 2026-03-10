@@ -8,6 +8,7 @@
 - **ORM**: Prisma
 - **Database**: PostgreSQL
 - **Language**: TypeScript
+- **Architecture**: DDD (Domain-Driven Design) / Clean Architecture
 
 ## Getting Started
 
@@ -114,12 +115,47 @@ npm run prisma:migrate
 npm run prisma:studio
 ```
 
-## Project Structure
+## Architecture
+
+This project follows **DDD (Domain-Driven Design)** and **Clean Architecture** principles:
+
+### Project Structure
 
 ```
 src/
-├── controllers/  # Route controllers
-├── routes/       # Route definitions
-├── middleware/   # Express middleware
-└── prisma/       # Prisma schema and migrations
+├── domain/              # Domain Layer (Business Logic)
+│   ├── entities/        # Domain entities/interfaces
+│   └── repositories/     # Repository interfaces
+│
+├── application/         # Application Layer (Use Cases)
+│   ├── use-cases/       # Business use cases
+│   ├── services/         # Application services
+│   └── dtos/            # Data Transfer Objects
+│
+├── infrastructure/      # Infrastructure Layer (External Concerns)
+│   ├── database/
+│   │   └── repositories/  # Repository implementations (Prisma)
+│   └── config/          # Configuration files
+│
+└── presentation/        # Presentation Layer (API)
+    ├── controllers/     # Route controllers
+    ├── routes/          # Route definitions
+    └── middleware/      # Express middleware
 ```
+
+### Architecture Principles
+
+- **Separation of Concerns**: Each layer has a specific responsibility
+- **Dependency Inversion**: High-level modules don't depend on low-level modules
+- **Domain-Driven**: Business logic is isolated in the domain layer
+- **Testability**: Each layer can be tested independently
+
+### Adding New Features
+
+1. **Update Prisma Schema** in `prisma/schema.prisma`
+2. **Create Domain Entity Interface** in `domain/entities/`
+3. **Define Repository Interface** in `domain/repositories/`
+4. **Implement Repository** in `infrastructure/database/repositories/`
+5. **Create Use Case** in `application/use-cases/`
+6. **Create Controller** in `presentation/controllers/`
+7. **Add Routes** in `presentation/routes/`
