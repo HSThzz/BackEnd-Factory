@@ -1,7 +1,7 @@
 import inquirer from 'inquirer';
-import { resolvePath } from '../utils/pathUtils';
-import { existsSync, readDir } from '../utils/fileSystem';
-import { ProjectConfig } from '../types';
+import { resolvePath } from '../utils/pathUtils.js';
+import { existsSync, readDir } from '../utils/fileSystem.js';
+import { ProjectConfig } from '../types/index.js';
 
 /**
  * Prompts user for project configuration
@@ -65,7 +65,7 @@ export async function projectPrompt(): Promise<ProjectConfig> {
       type: 'input',
       name: 'nodeVersion',
       message: 'Node.js version (optional):',
-      default: '18',
+      default: '22',
       validate: (input: string) => {
         if (input && !/^\d+$/.test(input)) {
           return 'Node.js version must be a number';

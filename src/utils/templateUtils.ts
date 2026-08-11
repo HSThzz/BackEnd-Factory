@@ -1,13 +1,16 @@
 import path from 'path';
 import fs from 'fs';
-import { exists, readDir, isDirectory } from './fileSystem';
+import { exists, readDir, isDirectory } from './fileSystem.js';
+import { dirnameFromMeta } from './meta.js';
+
+const moduleDir = dirnameFromMeta(import.meta.url);
 
 /**
  * Gets the package root directory
  * @returns {string} Package root directory path
  */
 function getPackageRoot(): string {
-  let currentDir = __dirname;
+  let currentDir = moduleDir;
 
   for (let i = 0; i < 5; i++) {
     const packageJsonPath = path.join(currentDir, 'package.json');
@@ -17,7 +20,7 @@ function getPackageRoot(): string {
     currentDir = path.resolve(currentDir, '..');
   }
 
-  return path.resolve(__dirname, '..', '..');
+  return path.resolve(moduleDir, '..', '..');
 }
 
 /**
@@ -28,7 +31,7 @@ function getTemplatesDir(): string {
   const packageRoot = getPackageRoot();
   const possiblePaths = [
     path.resolve(packageRoot, 'src', 'templates'),
-    path.resolve(__dirname, '..', '..', 'src', 'templates'),
+    path.resolve(moduleDir, '..', '..', 'src', 'templates'),
     path.resolve(process.cwd(), 'src', 'templates'),
   ];
 

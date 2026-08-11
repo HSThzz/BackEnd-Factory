@@ -1,7 +1,7 @@
-import { projectPrompt } from '../prompts/projectPrompt';
-import { stackPrompt } from '../prompts/stackPrompt';
-import { projectGenerator } from '../generators/projectGenerator';
-import { logger } from '../utils/logger';
+import { projectPrompt } from '../prompts/projectPrompt.js';
+import { stackPrompt } from '../prompts/stackPrompt.js';
+import { projectGenerator } from '../generators/projectGenerator.js';
+import { logger } from '../utils/logger.js';
 
 /**
  * Executes the create project command

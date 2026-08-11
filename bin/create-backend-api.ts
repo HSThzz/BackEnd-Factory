@@ -4,6 +4,6 @@
  * @fileoverview CLI entry point executable
  */
 
-import { run } from '../src';
+import { run } from '../src/index.js';
 
 run();

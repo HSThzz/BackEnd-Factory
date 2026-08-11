@@ -7,7 +7,7 @@ module.exports = tseslint.config(
   {
     files: ['src/**/*.ts', 'bin/**/*.ts'],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2022,
       sourceType: 'module',
       parserOptions: {
         project: './tsconfig.json',
@@ -26,7 +26,7 @@ module.exports = tseslint.config(
   {
     files: ['tests/**/*.ts'],
     languageOptions: {
-      ecmaVersion: 2020,
+      ecmaVersion: 2022,
       sourceType: 'module',
     },
     rules: {
@@ -40,6 +40,6 @@ module.exports = tseslint.config(
     },
   },
   {
-    ignores: ['dist/**', 'node_modules/**', 'coverage/**'],
+    ignores: ['dist/**', 'node_modules/**', 'coverage/**', 'src/templates/**'],
   }
 );

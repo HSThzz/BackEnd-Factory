@@ -4,7 +4,7 @@
 
 Before installing `create-backend-api`, ensure you have:
 
-- **Node.js** >= 14.0.0
+- **Node.js** >= 22.12.0
 - **npm** >= 6.0.0 or **yarn** >= 1.0.0
 
 ## Installation Methods

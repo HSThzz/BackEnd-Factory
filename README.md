@@ -1,17 +1,17 @@
 # create-backend-api
 
-> A powerful CLI tool to generate production-ready Node.js backend projects with TypeScript, following DDD (Domain-Driven Design) and Clean Architecture principles.
+> A CLI tool to generate lean Node.js backend scaffolds with TypeScript — entry point, database infra, and optional Docker. You own the architecture from there.
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Node.js Version](https://img.shields.io/badge/node-%3E%3D14.0.0-brightgreen)](https://nodejs.org/)
+[![Node.js Version](https://img.shields.io/badge/node-%3E%3D22.12.0-brightgreen)](https://nodejs.org/)
 
 ## ✨ Features
 
-- 🚀 **Quick Setup** - Generate a complete backend project in seconds
-- 🏗️ **DDD Architecture** - Projects follow Domain-Driven Design and Clean Architecture
-- 🎯 **Multiple Stacks** - Support for Express/Fastify + TypeORM/Prisma + PostgreSQL/MySQL/SQLite
+- 🚀 **Quick Setup** - Generate a minimal backend project in seconds
+- 🧹 **Lean Scaffold** - Entry point + DB config only; no unused boilerplate
+- 🎯 **Multiple Stacks** - Support for Express/Fastify + TypeORM/Prisma + PostgreSQL
 - 🐳 **Docker Ready** - Optional Docker and Docker Compose configuration
-- 📦 **Production Ready** - Pre-configured with ESLint, Prettier, and TypeScript
+- 📦 **Tooling Ready** - Pre-configured with ESLint, Prettier, and TypeScript
 - 🔧 **Type Safe** - Full TypeScript support with proper types
 
 ## 📋 Supported Stacks
@@ -55,7 +55,7 @@ The CLI will interactively ask you:
 2. **Description** - Brief project description
 3. **Version** - Project version (default: `1.0.0`)
 4. **Target directory** - Where to create the project
-5. **Node.js version** - For Docker (default: `18`)
+5. **Node.js version** - For Docker (default: `22`)
 6. **Docker?** - Include Docker configuration (Yes/No)
 7. **Framework** - Express or Fastify
 8. **ORM** - TypeORM or Prisma
@@ -75,7 +75,7 @@ $ create-backend-api create
 ✔ Project description: A REST API for my application
 ✔ Project version: 1.0.0
 ✔ Target directory: ./my-api
-✔ Node.js version (optional): 18
+✔ Node.js version (optional): 22
 ✔ Include Docker configuration? Yes
 ✔ Select a framework: Express
 ✔ Select an ORM: TypeORM
@@ -92,37 +92,24 @@ $ create-backend-api create
 
 ## 📁 Generated Project Structure
 
-Projects are generated following **DDD (Domain-Driven Design)** architecture:
+Projects get a **minimal scaffold** — bootstrap, DB infra, and optional Docker:
 
 ```
 my-api/
 ├── src/
-│   ├── domain/              # Domain Layer (Business Logic)
-│   │   ├── entities/         # Domain entities
-│   │   └── repositories/     # Repository interfaces
-│   │
-│   ├── application/         # Application Layer (Use Cases)
-│   │   ├── use-cases/       # Business use cases
-│   │   ├── services/         # Application services
-│   │   └── dtos/            # Data Transfer Objects
-│   │
-│   ├── infrastructure/      # Infrastructure Layer
-│   │   ├── database/
-│   │   │   ├── repositories/  # Repository implementations
-│   │   │   └── migrations/    # Database migrations
-│   │   └── config/          # Configuration files
-│   │
-│   └── presentation/        # Presentation Layer (API)
-│       ├── controllers/     # Route controllers
-│       ├── routes/          # Route definitions
-│       └── middleware/      # Express/Fastify middleware
+│   ├── index.ts             # App bootstrap + GET /health
+│   └── infrastructure/
+│       └── config/
+│           ├── database.ts  # TypeORM DataSource or PrismaClient
+│           └── data-source.ts  # TypeORM CLI (TypeORM stacks)
 │
-├── docker-compose.yml       # Docker Compose configuration
-├── Dockerfile               # Docker image definition
-├── .env.example             # Environment variables template
-├── package.json             # Project dependencies
-├── tsconfig.json            # TypeScript configuration
-└── README.md                # Project documentation
+├── prisma/schema.prisma     # Prisma stacks only (no sample models)
+├── docker-compose.yml       # Optional
+├── Dockerfile               # Optional
+├── .env.example
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
 ## 🎯 What's Included
@@ -131,19 +118,17 @@ Every generated project comes with:
 
 - ✅ **TypeScript** - Full type safety
 - ✅ **ESLint + Prettier** - Code quality and formatting
-- ✅ **Auto-formatting** - VS Code/Cursor configuration
-- ✅ **Health Check** - Built-in health endpoint
-- ✅ **Error Handling** - Centralized error handling
-- ✅ **Base Classes** - BaseEntity, BaseController, BaseRepository
+- ✅ **Health Check** - `GET /health`
+- ✅ **Database Setup** - Pre-configured TypeORM or Prisma connection
 - ✅ **Docker Support** - Optional Docker configuration
-- ✅ **Database Setup** - Pre-configured database connection
+- ✅ **No unused boilerplate** - Add your own architecture as you grow
 
 ## 📚 Documentation
 
 - [Getting Started](./docs/GETTING_STARTED.md) - Quick start guide
 - [Installation Guide](./docs/INSTALLATION.md) - Detailed installation instructions
 - [Usage Guide](./docs/USAGE.md) - Complete usage documentation
-- [Architecture](./docs/ARCHITECTURE.md) - DDD architecture explanation
+- [Architecture](./docs/ARCHITECTURE.md) - What the scaffold includes and how to grow it
 - [Examples](./docs/EXAMPLES.md) - Practical examples
 - [Troubleshooting](./docs/TROUBLESHOOTING.md) - Common issues and solutions
 
@@ -151,7 +136,7 @@ Every generated project comes with:
 
 ### Prerequisites
 
-- Node.js >= 14.0.0
+- Node.js >= 22.12.0
 - npm or yarn
 
 ### Setup

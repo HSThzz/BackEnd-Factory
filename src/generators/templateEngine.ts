@@ -1,5 +1,5 @@
 import Handlebars from 'handlebars';
-import { readFile } from '../utils/fileSystem';
+import { readFile } from '../utils/fileSystem.js';
 
 // Register Handlebars helpers
 Handlebars.registerHelper('eq', (a: unknown, b: unknown) => a === b);

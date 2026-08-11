@@ -1,40 +1,49 @@
 import express from 'express';
 import { prisma } from './infrastructure/config/database';
-import routes from './presentation/routes';
-import { errorHandler } from './presentation/middleware/errorHandler';
-import { notFoundHandler } from './presentation/middleware/notFoundHandler';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// Routes
-app.use('/api', routes);
+app.get('/health', (_req, res) => {
+  res.json({
+    status: 'ok',
+    name: '{{projectName}}',
+    version: '{{version}}',
+  });
+});
 
-// Error handling
-app.use(notFoundHandler);
-app.use(errorHandler);
+app.use((_req, res) => {
+  res.status(404).json({ error: 'Not found' });
+});
 
-// Start server
+app.use(
+  (
+    err: Error,
+    _req: express.Request,
+    res: express.Response,
+    _next: express.NextFunction
+  ) => {
+    console.error(err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+);
+
 app.listen(PORT, () => {
   console.log(`{{projectName}} server running on port ${PORT}`);
   console.log(`Environment: ${process.env.NODE_ENV || 'development'}`);
 });
 
-// Graceful shutdown
+const shutdown = async () => {
+  await prisma.$disconnect();
+  process.exit(0);
+};
+
 process.on('beforeExit', async () => {
   await prisma.$disconnect();
 });
 
-process.on('SIGTERM', async () => {
-  await prisma.$disconnect();
-  process.exit(0);
-});
-
-process.on('SIGINT', async () => {
-  await prisma.$disconnect();
-  process.exit(0);
-});
+process.on('SIGTERM', shutdown);
+process.on('SIGINT', shutdown);

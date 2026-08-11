@@ -2,5 +2,5 @@
  * @fileoverview Commands module exports
  */
 
-export { createProject } from './createProject';
-export { generateResource } from './generateResource';
+export { createProject } from './createProject.js';
+export { generateResource } from './generateResource.js';

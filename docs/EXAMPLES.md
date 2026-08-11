@@ -4,8 +4,6 @@
 
 ### Example 1: Express + TypeORM + PostgreSQL
 
-Create a REST API with Express, TypeORM, and PostgreSQL:
-
 ```bash
 create-backend-api create
 
@@ -16,11 +14,9 @@ create-backend-api create
 # - Include Docker: Yes
 ```
 
-**Result**: A complete Express API with TypeORM, PostgreSQL, and Docker support.
+**Result**: Minimal Express app with TypeORM connection, `GET /health`, and Docker support.
 
 ### Example 2: Fastify + TypeORM + PostgreSQL
-
-Create a high-performance API with Fastify:
 
 ```bash
 create-backend-api create
@@ -32,11 +28,9 @@ create-backend-api create
 # - Include Docker: Yes
 ```
 
-**Result**: A Fastify API optimized for performance with built-in logging.
+**Result**: Minimal Fastify app with TypeORM and built-in logging.
 
 ### Example 3: Express + Prisma + PostgreSQL
-
-Create an API with Prisma ORM:
 
 ```bash
 create-backend-api create
@@ -48,78 +42,43 @@ create-backend-api create
 # - Include Docker: Yes
 ```
 
-**Result**: An Express API with Prisma, including Prisma Studio and migrations.
+**Result**: Minimal Express app with Prisma client and an empty schema ready for your models.
 
-## Project Structure Examples
+## Generated Structure Example
 
-### Generated Entity Example
-
-After creating a project, you'll find a base entity structure:
-
-```typescript
-// src/domain/entities/BaseEntity.ts
-export abstract class BaseEntity {
-  id: string;
-  createdAt: Date;
-  updatedAt: Date;
-}
 ```
-
-### Generated Controller Example
-
-Controllers extend BaseController:
-
-```typescript
-// src/presentation/controllers/HealthController.ts
-export class HealthController extends BaseController {
-  async check(req: Request, res: Response): Promise<Response> {
-    // Health check logic
-  }
-}
-```
-
-### Generated Routes Example
-
-Routes are organized in the presentation layer:
-
-```typescript
-// src/presentation/routes/index.ts
-router.get('/health', (req, res) => healthController.check(req, res));
+my-api/
+├── src/
+│   ├── index.ts
+│   └── infrastructure/
+│       └── config/
+│           ├── database.ts
+│           └── data-source.ts   # TypeORM only
+├── prisma/schema.prisma         # Prisma only
+├── package.json
+├── tsconfig.json
+├── .env.example
+└── README.md
 ```
 
 ## Common Use Cases
 
 ### Use Case 1: Quick Prototype
 
-For rapid prototyping:
-
 ```bash
 create-backend-api create
-# Accept all defaults
-# Use Express + TypeORM + PostgreSQL
-# Include Docker for easy setup
+# Accept defaults
+# Express + TypeORM + PostgreSQL
+# Include Docker for easy DB setup
 ```
 
-### Use Case 2: Production API
-
-For production-ready APIs:
+### Use Case 2: Production Starting Point
 
 ```bash
 create-backend-api create
-# Choose appropriate stack
+# Choose your stack
 # Include Docker for deployment
-# Configure environment variables properly
-```
-
-### Use Case 3: Learning DDD
-
-For learning Domain-Driven Design:
-
-```bash
-create-backend-api create
-# Review the generated structure
-# Study the layer separation
-# Follow the architecture patterns
+# Add your own architecture and features on top of the scaffold
 ```
 
 ## Next Steps After Generation
@@ -128,9 +87,8 @@ create-backend-api create
 
 ```bash
 cd <project-name>
-# Explore the structure
-# Read the README.md
-# Check the architecture
+# Read README.md
+# Inspect src/index.ts and infrastructure/config
 ```
 
 ### 2. Set Up Environment
@@ -150,11 +108,7 @@ npm run dev
 ### 4. Test the API
 
 ```bash
-# Health check
-curl http://localhost:3000/api/health
-
-# Root endpoint
-curl http://localhost:3000/api
+curl http://localhost:3000/health
 ```
 
 ## Docker Examples
@@ -162,27 +116,22 @@ curl http://localhost:3000/api
 ### Development with Docker
 
 ```bash
-# Start everything
 docker-compose up
 
-# In another terminal, test
-curl http://localhost:3000/api/health
+# In another terminal
+curl http://localhost:3000/health
 ```
 
 ### Production Build
 
 ```bash
-# Build image
 docker build -t my-api .
-
-# Run container
 docker run -p 3000:3000 my-api
 ```
 
-## Tips and Best Practices
+## Tips
 
-1. **Start Simple**: Begin with default options, then customize
-2. **Use Docker**: Simplifies database setup and deployment
-3. **Follow DDD**: Keep business logic in the domain layer
-4. **Test Early**: Write tests as you add features
-5. **Use TypeScript**: Leverage type safety for better code quality
+1. **Start lean** — the scaffold is intentionally small; add folders as you need them
+2. **Use Docker** — simplifies PostgreSQL setup
+3. **Own the structure** — introduce DDD or feature modules when the project justifies it
+4. **Use TypeScript** — leverage type safety as you grow

@@ -3,16 +3,16 @@ import {
   FRAMEWORKS,
   FRAMEWORK_NAMES,
   Framework,
-} from '../constants/frameworks';
-import { ORMS, ORM_NAMES, ORM } from '../constants/orms';
-import { DATABASES, DATABASE_NAMES, Database } from '../constants/databases';
-import { StackSelection } from '../types';
+} from '../constants/frameworks.js';
+import { ORMS, ORM_NAMES, ORM } from '../constants/orms.js';
+import { DATABASES, DATABASE_NAMES, Database } from '../constants/databases.js';
+import { StackSelection } from '../types/index.js';
 import {
   getAvailableCombinationsForFramework,
   templateExists,
   formatAvailableTemplates,
-} from '../utils/templateUtils';
-import { logger } from '../utils/logger';
+} from '../utils/templateUtils.js';
+import { logger } from '../utils/logger.js';
 
 /**
  * Prompts user to select technology stack (framework, ORM, database)
@@ -53,9 +53,7 @@ export async function stackPrompt(): Promise<StackSelection> {
   }
 
   // Build ORM choices based on available combinations
-  const availableORMs = new Set(
-    availableCombinations.map((c) => c.orm)
-  );
+  const availableORMs = new Set(availableCombinations.map((c) => c.orm));
   const ormChoices = [
     {
       name: ORM_NAMES[ORMS.TYPEORM],
@@ -76,9 +74,7 @@ export async function stackPrompt(): Promise<StackSelection> {
 
   // Build database choices based on available combinations for selected framework + ORM
   const availableDatabases = new Set(
-    availableCombinations
-      .filter((c) => c.orm === orm)
-      .map((c) => c.database)
+    availableCombinations.filter((c) => c.orm === orm).map((c) => c.database)
   );
 
   if (availableDatabases.size === 0) {

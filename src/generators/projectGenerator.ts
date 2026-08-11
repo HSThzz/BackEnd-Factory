@@ -1,7 +1,7 @@
 import ora from 'ora';
 import path from 'path';
 import fs from 'fs';
-import { joinPath } from '../utils/pathUtils';
+import { joinPath } from '../utils/pathUtils.js';
 import {
   ensureDir,
   copyFile,
@@ -11,20 +11,23 @@ import {
   isDirectory,
   writeFile,
   readFile,
-} from '../utils/fileSystem';
-import { renderTemplate, renderTemplateString } from './templateEngine';
-import { logger } from '../utils/logger';
-import { ProjectGenerationOptions } from '../types';
+} from '../utils/fileSystem.js';
+import { renderTemplate, renderTemplateString } from './templateEngine.js';
+import { logger } from '../utils/logger.js';
+import { ProjectGenerationOptions } from '../types/index.js';
+import { dirnameFromMeta } from '../utils/meta.js';
+
+const moduleDir = dirnameFromMeta(import.meta.url);
 
 /**
  * Gets the package root directory
  * @returns {string} Package root directory path
  */
 function getPackageRoot(): string {
-  // Try to find package.json by walking up from __dirname
-  let currentDir = __dirname;
+  // Try to find package.json by walking up from this module directory
+  let currentDir = moduleDir;
 
-  // When installed via npm: __dirname is dist/generators/
+  // When installed via npm: moduleDir is dist/generators/
   // Package root is at: dist/../ (create-backend-api/)
   // When running from source: same structure
 
@@ -38,7 +41,7 @@ function getPackageRoot(): string {
   }
 
   // Fallback: assume package root is 2 levels up from dist/generators/
-  return path.resolve(__dirname, '..', '..');
+  return path.resolve(moduleDir, '..', '..');
 }
 
 /**
@@ -60,12 +63,12 @@ function getTemplatePaths(stack: {
   return [
     // Primary: from package root -> src/templates/
     path.resolve(packageRoot, 'src', 'templates', templateName),
-    // Fallback 1: relative from __dirname (dist/generators/)
-    path.resolve(__dirname, '..', '..', 'src', 'templates', templateName),
+    // Fallback 1: relative from this module (dist/generators/)
+    path.resolve(moduleDir, '..', '..', 'src', 'templates', templateName),
     // Fallback 2: from process.cwd() (when running from source)
     path.resolve(process.cwd(), 'src', 'templates', templateName),
     // Fallback 3: try one more level up
-    path.resolve(__dirname, '..', '..', '..', 'src', 'templates', templateName),
+    path.resolve(moduleDir, '..', '..', '..', 'src', 'templates', templateName),
   ];
 }
 
@@ -94,7 +97,9 @@ async function processTemplateDirectory(
 
     if (
       !includeDocker &&
-      (item.startsWith('docker') || item === '.dockerignore')
+      (item.startsWith('docker') ||
+        item === 'Dockerfile' ||
+        item === '.dockerignore')
     ) {
       continue;
     }
@@ -169,7 +174,7 @@ export async function projectGenerator(
       framework: stack.framework,
       orm: stack.orm,
       database: stack.database,
-      nodeVersion: options.nodeVersion || '18',
+      nodeVersion: options.nodeVersion || '22',
       includeDocker: includeDocker || false,
       projectNameCapitalized:
         name.charAt(0).toUpperCase() + name.slice(1).replace(/-/g, ' '),

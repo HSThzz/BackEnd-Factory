@@ -8,13 +8,12 @@
 - **ORM**: TypeORM
 - **Database**: PostgreSQL
 - **Language**: TypeScript
-- **Architecture**: DDD (Domain-Driven Design) / Clean Architecture
 
 ## Getting Started
 
 ### Prerequisites
 
-- Node.js >= 18
+- Node.js >= 20
 - PostgreSQL
 
 ### Installation
@@ -34,6 +33,8 @@ cp .env.example .env
 ```bash
 npm run dev
 ```
+
+The server exposes `GET /health` and initializes the TypeORM connection on boot.
 
 ### Build
 
@@ -91,49 +92,15 @@ npm run format:check
 npm run lint
 ```
 
-**Auto-formatting**: If you're using VS Code or Cursor, the project is configured to automatically format on save. Just make sure you have the Prettier extension installed.
-
-## Architecture
-
-This project follows **DDD (Domain-Driven Design)** and **Clean Architecture** principles:
-
-### Project Structure
+## Project Structure
 
 ```
 src/
-├── domain/              # Domain Layer (Business Logic)
-│   ├── entities/        # Domain entities
-│   └── repositories/     # Repository interfaces
-│
-├── application/         # Application Layer (Use Cases)
-│   ├── use-cases/       # Business use cases
-│   ├── services/         # Application services
-│   └── dtos/            # Data Transfer Objects
-│
-├── infrastructure/      # Infrastructure Layer (External Concerns)
-│   ├── database/
-│   │   ├── repositories/  # Repository implementations
-│   │   └── migrations/    # Database migrations
-│   └── config/          # Configuration files
-│
-└── presentation/        # Presentation Layer (API)
-    ├── controllers/     # Route controllers
-    ├── routes/          # Route definitions
-    └── middleware/      # Express middleware
+├── index.ts                 # App bootstrap, health route, DB init
+└── infrastructure/
+    └── config/
+        ├── database.ts      # TypeORM DataSource
+        └── data-source.ts   # TypeORM CLI entry
 ```
 
-### Architecture Principles
-
-- **Separation of Concerns**: Each layer has a specific responsibility
-- **Dependency Inversion**: High-level modules don't depend on low-level modules
-- **Domain-Driven**: Business logic is isolated in the domain layer
-- **Testability**: Each layer can be tested independently
-
-### Adding New Features
-
-1. **Create Domain Entity** in `domain/entities/`
-2. **Define Repository Interface** in `domain/repositories/`
-3. **Implement Repository** in `infrastructure/database/repositories/`
-4. **Create Use Case** in `application/use-cases/`
-5. **Create Controller** in `presentation/controllers/`
-6. **Add Routes** in `presentation/routes/`
+Add your own modules (entities, routes, services) as the project grows.

@@ -12,7 +12,7 @@ Welcome to the `create-backend-api` documentation. This directory contains compr
 
 ### Guides
 
-- **[Architecture Guide](./ARCHITECTURE.md)** - Understanding DDD and Clean Architecture in generated projects
+- **[Architecture Guide](./ARCHITECTURE.md)** - What the scaffold includes and how to grow it
 - **[Examples](./EXAMPLES.md)** - Practical examples and use cases
 
 ### Help

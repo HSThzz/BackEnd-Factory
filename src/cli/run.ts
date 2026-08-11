@@ -1,4 +1,4 @@
-import { setupCommands } from './args';
+import { setupCommands } from './args.js';
 
 /**
  * Runs the CLI application and parses command line arguments

@@ -3,6 +3,6 @@
  * @module index
  */
 
-export { run } from './cli/run';
-export * from './commands';
-export * from './types';
+export { run } from './cli/run.js';
+export * from './commands/index.js';
+export * from './types/index.js';

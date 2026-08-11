@@ -174,26 +174,25 @@ docker-compose up --build
 
 ## Project Structure Overview
 
-The generated projects follow DDD (Domain-Driven Design) architecture:
+Generated projects are intentionally lean:
 
-- **Domain Layer**: Business logic and entities
-- **Application Layer**: Use cases and services
-- **Infrastructure Layer**: Database and external services
-- **Presentation Layer**: Controllers and routes
+- **`src/index.ts`**: HTTP bootstrap, health route, DB init
+- **`src/infrastructure/config/`**: TypeORM or Prisma connection
+- **Docker files**: Only when selected
+- **Tooling**: TypeScript, ESLint, Prettier
 
-See [Architecture Guide](./ARCHITECTURE.md) for detailed information.
+See [Architecture Guide](./ARCHITECTURE.md) for details on growing the project.
 
 ## Next Steps
 
-1. **Review Generated Code**: Check the generated structure and adapt as needed
-2. **Add Your Entities**: Create domain entities in `src/domain/entities/`
-3. **Implement Use Cases**: Add business logic in `src/application/use-cases/`
-4. **Create Controllers**: Add API endpoints in `src/presentation/controllers/`
-5. **Configure Routes**: Set up routes in `src/presentation/routes/`
+1. **Review Generated Code**: Check `src/index.ts` and the DB config
+2. **Add Models**: TypeORM entities or Prisma models in `prisma/schema.prisma`
+3. **Add Routes**: Extend `index.ts` or extract routers as needed
+4. **Choose Your Structure**: Flat modules, feature folders, or layered architecture — your call
 
 ## Tips
 
-- Use the health check endpoint (`/api/health`) to verify your API is running
+- Use the health check endpoint (`/health`) to verify your API is running
 - All projects include ESLint and Prettier - format your code with `npm run format`
 - VS Code/Cursor users get auto-formatting on save (if Prettier extension is installed)
 - Check the generated `README.md` in your project for stack-specific instructions

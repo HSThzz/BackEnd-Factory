@@ -1,6 +1,6 @@
 import { Command } from 'commander';
-import { createProject } from '../commands/createProject';
-import { generateResource } from '../commands/generateResource';
+import { createProject } from '../commands/createProject.js';
+import { generateResource } from '../commands/generateResource.js';
 
 /**
  * Sets up and configures all CLI commands
@@ -14,7 +14,7 @@ export function setupCommands(): Command {
     .description(
       'A CLI tool to generate Node.js backend projects with TypeScript'
     )
-    .version('0.1.0');
+    .version('0.2.0');
 
   program
     .command('create')

@@ -5,6 +5,28 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.2.0] - 2026-03-23
+
+### Changed
+
+- Generated projects are now a **lean scaffold**: `src/index.ts`, DB config, tooling, and optional Docker
+- Removed DDD boilerplate from templates (`BaseEntity`, `BaseRepository`, `BaseController`, empty layer folders)
+- Health check moved to `GET /health` (inline in the entry point)
+- Prisma schema no longer includes a sample `User` model
+- `Dockerfile` is correctly skipped when Docker is declined
+- CLI requires Node.js `>=22.12.0` and ships as **ESM** (`"type": "module"`)
+- Default Docker Node image bumped from `18` to `22`
+
+### Dependencies
+
+- CLI: `chalk` 6, `commander` 15, `inquirer` 14, `ora` 9.4, `handlebars` 4.7.9 (security), `fs-extra` 11.4
+- Templates: Express 5 / Fastify 5, TypeORM 1.x, Prisma 6.x, `tsx` instead of `ts-node-dev`
+- Dev tooling and GitHub Actions (`checkout`/`setup-node` v4) updated
+
+### Docs
+
+- Updated README and docs to describe the minimal scaffold instead of a full DDD tree
+
 ## [0.1.2] - 2024-12-19
 
 ### Added

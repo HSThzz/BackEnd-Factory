@@ -1,6 +1,6 @@
-import { Framework } from '../constants/frameworks';
-import { ORM } from '../constants/orms';
-import { Database } from '../constants/databases';
+import { Framework } from '../constants/frameworks.js';
+import { ORM } from '../constants/orms.js';
+import { Database } from '../constants/databases.js';
 
 /**
  * Technology stack selection

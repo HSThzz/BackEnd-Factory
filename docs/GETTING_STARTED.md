@@ -79,7 +79,7 @@ The CLI will ask you:
 2. **Project description** - Brief description
 3. **Project version** - Default: `1.0.0`
 4. **Target directory** - Where to create (default: `./<project-name>`)
-5. **Node.js version** - For Docker (default: `18`)
+5. **Node.js version** - For Docker (default: `22`)
 6. **Include Docker?** - Yes/No (default: Yes)
 7. **Framework** - Express or Fastify
 8. **ORM** - TypeORM or Prisma
@@ -89,13 +89,12 @@ The CLI will ask you:
 
 After answering the prompts, your project will be generated with:
 
-- ✅ Complete DDD architecture structure
+- ✅ Lean scaffold (`index.ts` + DB config)
 - ✅ TypeScript configuration
 - ✅ ESLint and Prettier setup
 - ✅ Docker configuration (if selected)
-- ✅ Base classes and utilities
-- ✅ Health check endpoint
-- ✅ Error handling
+- ✅ Health check endpoint (`GET /health`)
+- ✅ Database connection ready to use
 
 ### Step 4: Start Development
 
@@ -126,7 +125,7 @@ $ npx create-backend-api create
 ? Project description: REST API for blog management system
 ? Project version: 1.0.0
 ? Target directory: ./blog-api
-? Node.js version (optional): 18
+? Node.js version (optional): 22
 ? Include Docker configuration? Yes
 ℹ
 ? Select a framework: Express
@@ -161,12 +160,12 @@ npx create-backend-api create
 # Include Docker for deployment
 ```
 
-### Learning DDD
+### Minimal Starting Point
 
 ```bash
 npx create-backend-api create
-# Review the generated structure
-# Study the architecture layers
+# Review src/index.ts and infrastructure/config
+# Add your own modules and architecture as needed
 ```
 
 ## 🔧 Available Commands
@@ -212,7 +211,7 @@ Shows the CLI version.
 1. **Use npx** - No need to install, always get the latest version
 2. **Check the generated README** - Each project includes stack-specific instructions
 3. **Use Docker** - Simplifies database setup and deployment
-4. **Review the structure** - Understand the DDD architecture before coding
+4. **Keep it lean** - Add folders and patterns only when you need them
 5. **Start simple** - Use defaults first, then customize
 
 ## ❓ Need Help?
