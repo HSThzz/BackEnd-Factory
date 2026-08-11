@@ -33,7 +33,7 @@ The CLI will guide you through the following prompts:
 
 - **Framework**: Choose between Express or Fastify
 - **ORM**: Choose between TypeORM or Prisma
-- **Database**: Choose between PostgreSQL, MySQL, or SQLite
+- **Database**: PostgreSQL
 
 ### Example Session
 

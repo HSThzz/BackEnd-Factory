@@ -55,8 +55,8 @@ We welcome feature suggestions! Please open an issue with:
 
 ```bash
 # Clone your fork
-git clone https://github.com/HSThzz/create-backend-api.git
-cd create-backend-api
+git clone https://github.com/HSThzz/BackEnd-Factory.git
+cd BackEnd-Factory
 
 # Install dependencies
 npm install

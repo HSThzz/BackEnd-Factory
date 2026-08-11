@@ -14,7 +14,7 @@ export function setupCommands(): Command {
     .description(
       'A CLI tool to generate Node.js backend projects with TypeScript'
     )
-    .version('0.2.0');
+    .version('0.2.1');
 
   program
     .command('create')

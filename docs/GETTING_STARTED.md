@@ -34,8 +34,8 @@ If you want to use the latest development version:
 
 ```bash
 # Clone the repository
-git clone https://github.com/HSThzz/create-backend-api.git
-cd create-backend-api
+git clone https://github.com/HSThzz/BackEnd-Factory.git
+cd BackEnd-Factory
 
 # Install dependencies
 npm install
@@ -83,7 +83,7 @@ The CLI will ask you:
 6. **Include Docker?** - Yes/No (default: Yes)
 7. **Framework** - Express or Fastify
 8. **ORM** - TypeORM or Prisma
-9. **Database** - PostgreSQL, MySQL, or SQLite
+9. **Database** - PostgreSQL
 
 ### Step 3: Project is Generated
 
